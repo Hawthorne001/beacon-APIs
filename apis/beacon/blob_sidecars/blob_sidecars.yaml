@@ -29,24 +29,25 @@ get:
       headers:
         Eth-Consensus-Version:
           $ref: '../../../beacon-node-oapi.yaml#/components/headers/Eth-Consensus-Version'
-          required: false
       content:
         application/json:
           schema:
             title: GetBlobSidecarsResponse
             type: object
-            required: [data]
+            required: [version, execution_optimistic, finalized, data]
             properties:
               version:
                 type: string
-                enum: [phase0, altair, bellatrix, capella, deneb]
+                enum: [phase0, altair, bellatrix, capella, deneb, electra]
                 example: "deneb"
               execution_optimistic:
                 $ref: "../../../beacon-node-oapi.yaml#/components/schemas/ExecutionOptimistic"
               finalized:
                 $ref: "../../../beacon-node-oapi.yaml#/components/schemas/Finalized"
               data:
-                $ref: "../../../beacon-node-oapi.yaml#/components/schemas/Deneb.BlobSidecars"
+                anyOf:
+                  - $ref: "../../../beacon-node-oapi.yaml#/components/schemas/Deneb.BlobSidecars"
+                  - $ref: "../../../beacon-node-oapi.yaml#/components/schemas/Electra.BlobSidecars"
         application/octet-stream:
           schema:
             description: "SSZ serialized `BlobSidecars` bytes. Use Accept header to choose this response type"
@@ -68,5 +69,7 @@ get:
           example:
             code: 404
             message: "Block not found"
+    "406":
+      $ref: "../../../beacon-node-oapi.yaml#/components/responses/NotAcceptable"
     "500":
       $ref: "../../../beacon-node-oapi.yaml#/components/responses/InternalError"

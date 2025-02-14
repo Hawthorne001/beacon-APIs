@@ -1,6 +1,7 @@
 get:
   operationId: getPoolAttesterSlashings
   summary: Get AttesterSlashings from operations pool
+  deprecated: true
   description: Retrieves attester slashings known by the node but not necessarily incorporated into any block
   tags:
     - Beacon
@@ -17,13 +18,14 @@ get:
               data:
                 type: array
                 items:
-                  $ref: '../../../beacon-node-oapi.yaml#/components/schemas/AttesterSlashing'
+                  $ref: '../../../beacon-node-oapi.yaml#/components/schemas/Phase0.AttesterSlashing'
     "500":
       $ref: '../../../beacon-node-oapi.yaml#/components/responses/InternalError'
 
 post:
   operationId: submitPoolAttesterSlashings
   summary: Submit AttesterSlashing object to node's pool
+  deprecated: true
   description: Submits AttesterSlashing object to node's pool and if passes validation node MUST broadcast it to network.
   tags:
     - Beacon
@@ -32,7 +34,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../../../beacon-node-oapi.yaml#/components/schemas/AttesterSlashing'
+          $ref: '../../../beacon-node-oapi.yaml#/components/schemas/Phase0.AttesterSlashing'
   responses:
     "200":
       description: Success

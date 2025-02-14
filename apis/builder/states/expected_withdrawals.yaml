@@ -1,6 +1,7 @@
 get:
   operationId: "getNextWithdrawals"
   summary: "Get the withdrawals that are to be included for the block built on the specified state."
+  deprecated: true
   description: |
     Get the withdrawals computed from the specified state, that will be included in the block 
     that gets built on the specified state.
@@ -56,5 +57,7 @@ get:
           example:
             code: 404
             message: "State not found"
+    "406":
+      $ref: "../../../beacon-node-oapi.yaml#/components/responses/NotAcceptable"
     "500":
       $ref: '../../../beacon-node-oapi.yaml#/components/responses/InternalError'
